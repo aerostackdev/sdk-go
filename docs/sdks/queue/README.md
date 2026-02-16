@@ -36,11 +36,11 @@ func main() {
     )
 
     res, err := s.Queue.QueueEnqueue(ctx, operations.QueueEnqueueRequestBody{
+        Type: "send-email",
         Data: map[string]any{
             "key": "<value>",
         },
         Delay: undefined.Pointer[int64](60),
-        Type: "send-email",
     })
     if err != nil {
         log.Fatal(err)

@@ -7,10 +7,10 @@ import (
 )
 
 type CacheSetRequestBody struct {
-	Key string `json:"key"`
-	// Time to live in seconds
-	TTL   *int64 `json:"ttl,omitempty"`
+	Key   string `json:"key"`
 	Value any    `json:"value"`
+	// Time to live in seconds
+	TTL *int64 `json:"ttl,omitempty"`
 }
 
 func (c *CacheSetRequestBody) GetKey() string {
@@ -20,18 +20,18 @@ func (c *CacheSetRequestBody) GetKey() string {
 	return c.Key
 }
 
-func (c *CacheSetRequestBody) GetTTL() *int64 {
-	if c == nil {
-		return nil
-	}
-	return c.TTL
-}
-
 func (c *CacheSetRequestBody) GetValue() any {
 	if c == nil {
 		return nil
 	}
 	return c.Value
+}
+
+func (c *CacheSetRequestBody) GetTTL() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.TTL
 }
 
 // CacheSetResponseBody - Value cached successfully

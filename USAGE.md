@@ -19,16 +19,16 @@ func main() {
 		}),
 	)
 
-	res, err := s.Ai.AiChat(ctx, operations.AiChatRequestBody{
-		Messages: []operations.Messages{
-			operations.Messages{},
+	res, err := s.Database.DbQuery(ctx, operations.DbQueryRequestBody{
+		SQL: "SELECT * FROM users WHERE active = ?",
+		Params: []any{
+			true,
 		},
-		Model: undefined.Pointer("@cf/meta/llama-3-8b-instruct"),
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Object != nil {
+	if res.DbQueryResult != nil {
 		// handle response
 	}
 }

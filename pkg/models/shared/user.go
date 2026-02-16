@@ -8,11 +8,11 @@ import (
 )
 
 type User struct {
-	CreatedAt *time.Time     `json:"createdAt,omitempty"`
-	Email     *string        `json:"email,omitempty"`
 	ID        *string        `json:"id,omitempty"`
-	Metadata  map[string]any `json:"metadata,omitempty"`
+	Email     *string        `json:"email,omitempty"`
 	Name      *string        `json:"name,omitempty"`
+	CreatedAt *time.Time     `json:"createdAt,omitempty"`
+	Metadata  map[string]any `json:"metadata,omitempty"`
 }
 
 func (u User) MarshalJSON() ([]byte, error) {
@@ -26,11 +26,11 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (u *User) GetCreatedAt() *time.Time {
+func (u *User) GetID() *string {
 	if u == nil {
 		return nil
 	}
-	return u.CreatedAt
+	return u.ID
 }
 
 func (u *User) GetEmail() *string {
@@ -40,11 +40,18 @@ func (u *User) GetEmail() *string {
 	return u.Email
 }
 
-func (u *User) GetID() *string {
+func (u *User) GetName() *string {
 	if u == nil {
 		return nil
 	}
-	return u.ID
+	return u.Name
+}
+
+func (u *User) GetCreatedAt() *time.Time {
+	if u == nil {
+		return nil
+	}
+	return u.CreatedAt
 }
 
 func (u *User) GetMetadata() map[string]any {
@@ -52,11 +59,4 @@ func (u *User) GetMetadata() map[string]any {
 		return nil
 	}
 	return u.Metadata
-}
-
-func (u *User) GetName() *string {
-	if u == nil {
-		return nil
-	}
-	return u.Name
 }

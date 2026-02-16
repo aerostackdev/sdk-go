@@ -36,11 +36,11 @@ func main() {
     )
 
     res, err := s.Services.ServicesInvoke(ctx, operations.ServicesInvokeRequestBody{
+        ServiceName: "billing-webhook",
         Data: map[string]any{
             "key": "<value>",
             "key1": "<value>",
         },
-        ServiceName: "billing-webhook",
     })
     if err != nil {
         log.Fatal(err)

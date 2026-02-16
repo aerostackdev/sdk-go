@@ -8,10 +8,10 @@ import (
 )
 
 type AuthResponse struct {
-	ExpiresAt *time.Time `json:"expiresAt,omitempty"`
 	// JWT authentication token
-	Token *string `json:"token,omitempty"`
-	User  *User   `json:"user,omitempty"`
+	Token     *string    `json:"token,omitempty"`
+	User      *User      `json:"user,omitempty"`
+	ExpiresAt *time.Time `json:"expiresAt,omitempty"`
 }
 
 func (a AuthResponse) MarshalJSON() ([]byte, error) {
@@ -23,13 +23,6 @@ func (a *AuthResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (a *AuthResponse) GetExpiresAt() *time.Time {
-	if a == nil {
-		return nil
-	}
-	return a.ExpiresAt
 }
 
 func (a *AuthResponse) GetToken() *string {
@@ -44,4 +37,11 @@ func (a *AuthResponse) GetUser() *User {
 		return nil
 	}
 	return a.User
+}
+
+func (a *AuthResponse) GetExpiresAt() *time.Time {
+	if a == nil {
+		return nil
+	}
+	return a.ExpiresAt
 }

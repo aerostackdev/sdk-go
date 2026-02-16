@@ -8,17 +8,10 @@ import (
 )
 
 type DbQueryRequestBody struct {
-	// Query parameters for prepared statements
-	Params []any `json:"params,omitempty"`
 	// SQL query to execute
 	SQL string `json:"sql"`
-}
-
-func (d *DbQueryRequestBody) GetParams() []any {
-	if d == nil {
-		return nil
-	}
-	return d.Params
+	// Query parameters for prepared statements
+	Params []any `json:"params,omitempty"`
 }
 
 func (d *DbQueryRequestBody) GetSQL() string {
@@ -28,15 +21,22 @@ func (d *DbQueryRequestBody) GetSQL() string {
 	return d.SQL
 }
 
+func (d *DbQueryRequestBody) GetParams() []any {
+	if d == nil {
+		return nil
+	}
+	return d.Params
+}
+
 type DbQueryResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Query executed successfully
-	DbQueryResult *shared.DbQueryResult
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// Query executed successfully
+	DbQueryResult *shared.DbQueryResult
 }
 
 func (d *DbQueryResponse) GetContentType() string {
@@ -44,13 +44,6 @@ func (d *DbQueryResponse) GetContentType() string {
 		return ""
 	}
 	return d.ContentType
-}
-
-func (d *DbQueryResponse) GetDbQueryResult() *shared.DbQueryResult {
-	if d == nil {
-		return nil
-	}
-	return d.DbQueryResult
 }
 
 func (d *DbQueryResponse) GetStatusCode() int {
@@ -65,4 +58,11 @@ func (d *DbQueryResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return d.RawResponse
+}
+
+func (d *DbQueryResponse) GetDbQueryResult() *shared.DbQueryResult {
+	if d == nil {
+		return nil
+	}
+	return d.DbQueryResult
 }

@@ -54,20 +54,20 @@ func Pointer[T any](v T) *T { return &v }
 // caching, queues, storage, and AI services.
 type SDK struct {
 	SDKVersion string
-	// AI/ML operations
-	Ai *Ai
+	// SQL database operations
+	Database *Database
 	// User authentication and management
 	Authentication *Authentication
 	// Key-value caching
 	Cache *Cache
-	// SQL database operations
-	Database *Database
 	// Background job queue
 	Queue *Queue
-	// Cross-service invocation
-	Services *Services
 	// File storage
 	Storage *Storage
+	// AI/ML operations
+	Ai *Ai
+	// Cross-service invocation
+	Services *Services
 
 	sdkConfiguration config.SDKConfiguration
 	hooks            *hooks.Hooks
@@ -143,9 +143,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
-		SDKVersion: "0.2.2",
+		SDKVersion: "0.3.1",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 0.2.2 2.823.4 1.0.0 undefined",
+			UserAgent:  "speakeasy-sdk/go 0.3.1 2.823.4 1.0.0 undefined",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
@@ -159,20 +159,15 @@ func New(opts ...SDKOption) *SDK {
 		sdk.sdkConfiguration.Client = &http.Client{Timeout: 60 * time.Second}
 	}
 
-	currentServerURL, _ := sdk.sdkConfiguration.GetServerDetails()
-	serverURL := currentServerURL
-	serverURL, sdk.sdkConfiguration.Client = sdk.hooks.SDKInit(currentServerURL, sdk.sdkConfiguration.Client)
-	if currentServerURL != serverURL {
-		sdk.sdkConfiguration.ServerURL = serverURL
-	}
+	sdk.sdkConfiguration = sdk.hooks.SDKInit(sdk.sdkConfiguration)
 
-	sdk.Ai = newAi(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Database = newDatabase(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Authentication = newAuthentication(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Cache = newCache(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Database = newDatabase(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Queue = newQueue(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Services = newServices(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Storage = newStorage(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Ai = newAi(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Services = newServices(sdk, sdk.sdkConfiguration, sdk.hooks)
 
 	return sdk
 }

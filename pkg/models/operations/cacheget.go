@@ -19,15 +19,8 @@ func (c *CacheGetRequestBody) GetKey() string {
 
 // CacheGetResponseBody - Cache value retrieved
 type CacheGetResponseBody struct {
-	Exists *bool `json:"exists,omitempty"`
 	Value  any   `json:"value,omitempty"`
-}
-
-func (c *CacheGetResponseBody) GetExists() *bool {
-	if c == nil {
-		return nil
-	}
-	return c.Exists
+	Exists *bool `json:"exists,omitempty"`
 }
 
 func (c *CacheGetResponseBody) GetValue() any {
@@ -35,6 +28,13 @@ func (c *CacheGetResponseBody) GetValue() any {
 		return nil
 	}
 	return c.Value
+}
+
+func (c *CacheGetResponseBody) GetExists() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.Exists
 }
 
 type CacheGetResponse struct {

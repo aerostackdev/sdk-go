@@ -3,15 +3,8 @@
 package shared
 
 type DbQueryResult struct {
-	Count   *int64           `json:"count,omitempty"`
 	Results []map[string]any `json:"results,omitempty"`
-}
-
-func (d *DbQueryResult) GetCount() *int64 {
-	if d == nil {
-		return nil
-	}
-	return d.Count
+	Count   *int64           `json:"count,omitempty"`
 }
 
 func (d *DbQueryResult) GetResults() []map[string]any {
@@ -19,4 +12,11 @@ func (d *DbQueryResult) GetResults() []map[string]any {
 		return nil
 	}
 	return d.Results
+}
+
+func (d *DbQueryResult) GetCount() *int64 {
+	if d == nil {
+		return nil
+	}
+	return d.Count
 }

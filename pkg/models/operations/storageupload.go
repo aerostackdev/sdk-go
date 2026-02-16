@@ -7,16 +7,9 @@ import (
 )
 
 type File struct {
-	// This field accepts []byte data or io.Reader implementations, such as *os.File.
-	Content  any    `multipartForm:"content"`
 	FileName string `multipartForm:"name=fileName"`
-}
-
-func (f *File) GetContent() any {
-	if f == nil {
-		return nil
-	}
-	return f.Content
+	// This field accepts []byte data or io.Reader implementations, such as *os.File.
+	Content any `multipartForm:"content"`
 }
 
 func (f *File) GetFileName() string {
@@ -26,18 +19,18 @@ func (f *File) GetFileName() string {
 	return f.FileName
 }
 
-type StorageUploadRequestBody struct {
-	ContentType *string `multipartForm:"name=contentType"`
-	File        File    `multipartForm:"file,name=file"`
-	// Storage key/path
-	Key string `multipartForm:"name=key"`
-}
-
-func (s *StorageUploadRequestBody) GetContentType() *string {
-	if s == nil {
+func (f *File) GetContent() any {
+	if f == nil {
 		return nil
 	}
-	return s.ContentType
+	return f.Content
+}
+
+type StorageUploadRequestBody struct {
+	File File `multipartForm:"file,name=file"`
+	// Storage key/path
+	Key         string  `multipartForm:"name=key"`
+	ContentType *string `multipartForm:"name=contentType"`
 }
 
 func (s *StorageUploadRequestBody) GetFile() File {
@@ -52,6 +45,13 @@ func (s *StorageUploadRequestBody) GetKey() string {
 		return ""
 	}
 	return s.Key
+}
+
+func (s *StorageUploadRequestBody) GetContentType() *string {
+	if s == nil {
+		return nil
+	}
+	return s.ContentType
 }
 
 // StorageUploadResponseBody - File uploaded successfully

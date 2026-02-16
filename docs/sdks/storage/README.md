@@ -42,12 +42,12 @@ func main() {
     }
 
     res, err := s.Storage.StorageUpload(ctx, operations.StorageUploadRequestBody{
-        ContentType: undefined.Pointer("image/jpeg"),
         File: operations.File{
-            Content: example,
             FileName: "example.file",
+            Content: example,
         },
         Key: "avatars/user-123.jpg",
+        ContentType: undefined.Pointer("image/jpeg"),
     })
     if err != nil {
         log.Fatal(err)

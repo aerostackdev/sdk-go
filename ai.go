@@ -18,6 +18,8 @@ import (
 
 // Ai - AI/ML operations
 type Ai struct {
+	Search *Search
+
 	rootSDK          *SDK
 	sdkConfiguration config.SDKConfiguration
 	hooks            *hooks.Hooks
@@ -28,6 +30,7 @@ func newAi(rootSDK *SDK, sdkConfig config.SDKConfiguration, hooks *hooks.Hooks) 
 		rootSDK:          rootSDK,
 		sdkConfiguration: sdkConfig,
 		hooks:            hooks,
+		Search:           newSearch(rootSDK, sdkConfig, hooks),
 	}
 }
 

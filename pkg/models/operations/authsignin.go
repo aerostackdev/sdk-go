@@ -27,21 +27,14 @@ func (a *AuthSigninRequestBody) GetPassword() string {
 }
 
 type AuthSigninResponse struct {
-	// User authenticated successfully
-	AuthResponse *shared.AuthResponse
 	// HTTP response content type for this operation
 	ContentType string
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-}
-
-func (a *AuthSigninResponse) GetAuthResponse() *shared.AuthResponse {
-	if a == nil {
-		return nil
-	}
-	return a.AuthResponse
+	// User authenticated successfully
+	AuthResponse *shared.AuthResponse
 }
 
 func (a *AuthSigninResponse) GetContentType() string {
@@ -63,4 +56,11 @@ func (a *AuthSigninResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return a.RawResponse
+}
+
+func (a *AuthSigninResponse) GetAuthResponse() *shared.AuthResponse {
+	if a == nil {
+		return nil
+	}
+	return a.AuthResponse
 }

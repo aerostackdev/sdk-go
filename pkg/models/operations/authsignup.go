@@ -9,9 +9,9 @@ import (
 
 type AuthSignupRequestBody struct {
 	Email    string         `json:"email"`
-	Metadata map[string]any `json:"metadata,omitempty"`
-	Name     *string        `json:"name,omitempty"`
 	Password string         `json:"password"`
+	Name     *string        `json:"name,omitempty"`
+	Metadata map[string]any `json:"metadata,omitempty"`
 }
 
 func (a *AuthSignupRequestBody) GetEmail() string {
@@ -21,11 +21,11 @@ func (a *AuthSignupRequestBody) GetEmail() string {
 	return a.Email
 }
 
-func (a *AuthSignupRequestBody) GetMetadata() map[string]any {
+func (a *AuthSignupRequestBody) GetPassword() string {
 	if a == nil {
-		return nil
+		return ""
 	}
-	return a.Metadata
+	return a.Password
 }
 
 func (a *AuthSignupRequestBody) GetName() *string {
@@ -35,29 +35,22 @@ func (a *AuthSignupRequestBody) GetName() *string {
 	return a.Name
 }
 
-func (a *AuthSignupRequestBody) GetPassword() string {
+func (a *AuthSignupRequestBody) GetMetadata() map[string]any {
 	if a == nil {
-		return ""
+		return nil
 	}
-	return a.Password
+	return a.Metadata
 }
 
 type AuthSignupResponse struct {
-	// User created successfully
-	AuthResponse *shared.AuthResponse
 	// HTTP response content type for this operation
 	ContentType string
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-}
-
-func (a *AuthSignupResponse) GetAuthResponse() *shared.AuthResponse {
-	if a == nil {
-		return nil
-	}
-	return a.AuthResponse
+	// User created successfully
+	AuthResponse *shared.AuthResponse
 }
 
 func (a *AuthSignupResponse) GetContentType() string {
@@ -79,4 +72,11 @@ func (a *AuthSignupResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return a.RawResponse
+}
+
+func (a *AuthSignupResponse) GetAuthResponse() *shared.AuthResponse {
+	if a == nil {
+		return nil
+	}
+	return a.AuthResponse
 }

@@ -7,10 +7,17 @@ import (
 )
 
 type QueueEnqueueRequestBody struct {
+	Type string         `json:"type"`
 	Data map[string]any `json:"data"`
 	// Delay in seconds before processing
 	Delay *int64 `json:"delay,omitempty"`
-	Type  string `json:"type"`
+}
+
+func (q *QueueEnqueueRequestBody) GetType() string {
+	if q == nil {
+		return ""
+	}
+	return q.Type
 }
 
 func (q *QueueEnqueueRequestBody) GetData() map[string]any {
@@ -25,13 +32,6 @@ func (q *QueueEnqueueRequestBody) GetDelay() *int64 {
 		return nil
 	}
 	return q.Delay
-}
-
-func (q *QueueEnqueueRequestBody) GetType() string {
-	if q == nil {
-		return ""
-	}
-	return q.Type
 }
 
 // QueueEnqueueResponseBody - Job enqueued successfully

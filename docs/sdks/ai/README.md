@@ -36,10 +36,10 @@ func main() {
     )
 
     res, err := s.Ai.AiChat(ctx, operations.AiChatRequestBody{
+        Model: undefined.Pointer("@cf/meta/llama-3-8b-instruct"),
         Messages: []operations.Messages{
             operations.Messages{},
         },
-        Model: undefined.Pointer("@cf/meta/llama-3-8b-instruct"),
     })
     if err != nil {
         log.Fatal(err)

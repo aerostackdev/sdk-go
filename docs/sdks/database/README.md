@@ -36,10 +36,10 @@ func main() {
     )
 
     res, err := s.Database.DbQuery(ctx, operations.DbQueryRequestBody{
+        SQL: "SELECT * FROM users WHERE active = ?",
         Params: []any{
             true,
         },
-        SQL: "SELECT * FROM users WHERE active = ?",
     })
     if err != nil {
         log.Fatal(err)

@@ -7,5 +7,5 @@ Service invoked successfully
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `Result`           | *any*              | :heavy_minus_sign: | N/A                |
 | `Success`          | **bool*            | :heavy_minus_sign: | N/A                |
+| `Result`           | *any*              | :heavy_minus_sign: | N/A                |

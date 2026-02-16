@@ -45,10 +45,11 @@ func (e *Code) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// ErrorResponse - Invalid request
 type ErrorResponse struct {
 	Code    Code           `json:"code"`
-	Details map[string]any `json:"details,omitempty"`
 	Message string         `json:"message"`
+	Details map[string]any `json:"details,omitempty"`
 }
 
 var _ error = &ErrorResponse{}

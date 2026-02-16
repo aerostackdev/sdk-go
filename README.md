@@ -66,16 +66,16 @@ func main() {
 		}),
 	)
 
-	res, err := s.Ai.AiChat(ctx, operations.AiChatRequestBody{
-		Messages: []operations.Messages{
-			operations.Messages{},
+	res, err := s.Database.DbQuery(ctx, operations.DbQueryRequestBody{
+		SQL: "SELECT * FROM users WHERE active = ?",
+		Params: []any{
+			true,
 		},
-		Model: undefined.Pointer("@cf/meta/llama-3-8b-instruct"),
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Object != nil {
+	if res.DbQueryResult != nil {
 		// handle response
 	}
 }
@@ -115,16 +115,16 @@ func main() {
 		}),
 	)
 
-	res, err := s.Ai.AiChat(ctx, operations.AiChatRequestBody{
-		Messages: []operations.Messages{
-			operations.Messages{},
+	res, err := s.Database.DbQuery(ctx, operations.DbQueryRequestBody{
+		SQL: "SELECT * FROM users WHERE active = ?",
+		Params: []any{
+			true,
 		},
-		Model: undefined.Pointer("@cf/meta/llama-3-8b-instruct"),
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Object != nil {
+	if res.DbQueryResult != nil {
 		// handle response
 	}
 }
@@ -142,10 +142,19 @@ func main() {
 
 * [AiChat](docs/sdks/ai/README.md#aichat) - Generate AI chat completion
 
+### [Ai.Search](docs/sdks/search/README.md)
+
+* [Ingest](docs/sdks/search/README.md#ingest) - Ingest content into managed search index
+* [Query](docs/sdks/search/README.md#query) - Search managed index
+* [Delete](docs/sdks/search/README.md#delete) - Delete item by ID
+* [DeleteByType](docs/sdks/search/README.md#deletebytype) - Delete all items of a type
+* [ListTypes](docs/sdks/search/README.md#listtypes) - List distinct types and counts
+* [Configure](docs/sdks/search/README.md#configure) - Update search configuration
+
 ### [Authentication](docs/sdks/authentication/README.md)
 
-* [AuthSignin](docs/sdks/authentication/README.md#authsignin) - Sign in user
 * [AuthSignup](docs/sdks/authentication/README.md#authsignup) - Sign up new user
+* [AuthSignin](docs/sdks/authentication/README.md#authsignin) - Sign in user
 
 ### [Cache](docs/sdks/cache/README.md)
 
@@ -199,11 +208,11 @@ func main() {
 		}),
 	)
 
-	res, err := s.Ai.AiChat(ctx, operations.AiChatRequestBody{
-		Messages: []operations.Messages{
-			operations.Messages{},
+	res, err := s.Database.DbQuery(ctx, operations.DbQueryRequestBody{
+		SQL: "SELECT * FROM users WHERE active = ?",
+		Params: []any{
+			true,
 		},
-		Model: undefined.Pointer("@cf/meta/llama-3-8b-instruct"),
 	}, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
@@ -218,7 +227,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Object != nil {
+	if res.DbQueryResult != nil {
 		// handle response
 	}
 }
@@ -258,16 +267,16 @@ func main() {
 		}),
 	)
 
-	res, err := s.Ai.AiChat(ctx, operations.AiChatRequestBody{
-		Messages: []operations.Messages{
-			operations.Messages{},
+	res, err := s.Database.DbQuery(ctx, operations.DbQueryRequestBody{
+		SQL: "SELECT * FROM users WHERE active = ?",
+		Params: []any{
+			true,
 		},
-		Model: undefined.Pointer("@cf/meta/llama-3-8b-instruct"),
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Object != nil {
+	if res.DbQueryResult != nil {
 		// handle response
 	}
 }
@@ -282,11 +291,12 @@ Handling errors in this SDK should largely match your expectations. All operatio
 
 By Default, an API error will return `sdkerrors.SDKError`. When custom error responses are specified for an operation, the SDK may also return their associated error. You can refer to respective *Errors* tables in SDK docs for more details on possible error types for each operation.
 
-For example, the `AuthSignin` function may return the following errors:
+For example, the `DbQuery` function may return the following errors:
 
 | Error Type              | Status Code | Content Type     |
 | ----------------------- | ----------- | ---------------- |
-| sdkerrors.ErrorResponse | 401         | application/json |
+| sdkerrors.ErrorResponse | 400, 401    | application/json |
+| sdkerrors.ErrorResponse | 500         | application/json |
 | sdkerrors.SDKError      | 4XX, 5XX    | \*/\*            |
 
 ### Example
@@ -313,11 +323,19 @@ func main() {
 		}),
 	)
 
-	res, err := s.Authentication.AuthSignin(ctx, operations.AuthSigninRequestBody{
-		Email:    "Tina.Buckridge@yahoo.com",
-		Password: "nIQ75VVtUTq8bO4",
+	res, err := s.Database.DbQuery(ctx, operations.DbQueryRequestBody{
+		SQL: "SELECT * FROM users WHERE active = ?",
+		Params: []any{
+			true,
+		},
 	})
 	if err != nil {
+
+		var e *sdkerrors.ErrorResponse
+		if errors.As(err, &e) {
+			// handle error
+			log.Fatal(e.Error())
+		}
 
 		var e *sdkerrors.ErrorResponse
 		if errors.As(err, &e) {
@@ -371,16 +389,16 @@ func main() {
 		}),
 	)
 
-	res, err := s.Ai.AiChat(ctx, operations.AiChatRequestBody{
-		Messages: []operations.Messages{
-			operations.Messages{},
+	res, err := s.Database.DbQuery(ctx, operations.DbQueryRequestBody{
+		SQL: "SELECT * FROM users WHERE active = ?",
+		Params: []any{
+			true,
 		},
-		Model: undefined.Pointer("@cf/meta/llama-3-8b-instruct"),
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Object != nil {
+	if res.DbQueryResult != nil {
 		// handle response
 	}
 }
@@ -411,16 +429,16 @@ func main() {
 		}),
 	)
 
-	res, err := s.Ai.AiChat(ctx, operations.AiChatRequestBody{
-		Messages: []operations.Messages{
-			operations.Messages{},
+	res, err := s.Database.DbQuery(ctx, operations.DbQueryRequestBody{
+		SQL: "SELECT * FROM users WHERE active = ?",
+		Params: []any{
+			true,
 		},
-		Model: undefined.Pointer("@cf/meta/llama-3-8b-instruct"),
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Object != nil {
+	if res.DbQueryResult != nil {
 		// handle response
 	}
 }
@@ -471,3 +489,5 @@ looking for the latest version.
 While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
 We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
 
+
+<!-- Placeholder for Future Speakeasy SDK Sections -->

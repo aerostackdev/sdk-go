@@ -38,15 +38,8 @@ func (e *Role) UnmarshalJSON(data []byte) error {
 }
 
 type Messages struct {
-	Content *string `json:"content,omitempty"`
 	Role    *Role   `json:"role,omitempty"`
-}
-
-func (m *Messages) GetContent() *string {
-	if m == nil {
-		return nil
-	}
-	return m.Content
+	Content *string `json:"content,omitempty"`
 }
 
 func (m *Messages) GetRole() *Role {
@@ -56,16 +49,16 @@ func (m *Messages) GetRole() *Role {
 	return m.Role
 }
 
-type AiChatRequestBody struct {
-	Messages []Messages `json:"messages"`
-	Model    *string    `json:"model,omitempty"`
+func (m *Messages) GetContent() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Content
 }
 
-func (a *AiChatRequestBody) GetMessages() []Messages {
-	if a == nil {
-		return []Messages{}
-	}
-	return a.Messages
+type AiChatRequestBody struct {
+	Model    *string    `json:"model,omitempty"`
+	Messages []Messages `json:"messages"`
 }
 
 func (a *AiChatRequestBody) GetModel() *string {
@@ -73,6 +66,13 @@ func (a *AiChatRequestBody) GetModel() *string {
 		return nil
 	}
 	return a.Model
+}
+
+func (a *AiChatRequestBody) GetMessages() []Messages {
+	if a == nil {
+		return []Messages{}
+	}
+	return a.Messages
 }
 
 // AiChatResponseBody - AI response generated

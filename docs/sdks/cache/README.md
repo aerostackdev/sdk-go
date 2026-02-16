@@ -95,8 +95,8 @@ func main() {
 
     res, err := s.Cache.CacheSet(ctx, operations.CacheSetRequestBody{
         Key: "<key>",
-        TTL: undefined.Pointer[int64](3600),
         Value: "<value>",
+        TTL: undefined.Pointer[int64](3600),
     })
     if err != nil {
         log.Fatal(err)

@@ -7,15 +7,8 @@ import (
 )
 
 type ServicesInvokeRequestBody struct {
-	Data        map[string]any `json:"data"`
 	ServiceName string         `json:"serviceName"`
-}
-
-func (s *ServicesInvokeRequestBody) GetData() map[string]any {
-	if s == nil {
-		return map[string]any{}
-	}
-	return s.Data
+	Data        map[string]any `json:"data"`
 }
 
 func (s *ServicesInvokeRequestBody) GetServiceName() string {
@@ -25,17 +18,17 @@ func (s *ServicesInvokeRequestBody) GetServiceName() string {
 	return s.ServiceName
 }
 
-// ServicesInvokeResponseBody - Service invoked successfully
-type ServicesInvokeResponseBody struct {
-	Result  any   `json:"result,omitempty"`
-	Success *bool `json:"success,omitempty"`
+func (s *ServicesInvokeRequestBody) GetData() map[string]any {
+	if s == nil {
+		return map[string]any{}
+	}
+	return s.Data
 }
 
-func (s *ServicesInvokeResponseBody) GetResult() any {
-	if s == nil {
-		return nil
-	}
-	return s.Result
+// ServicesInvokeResponseBody - Service invoked successfully
+type ServicesInvokeResponseBody struct {
+	Success *bool `json:"success,omitempty"`
+	Result  any   `json:"result,omitempty"`
 }
 
 func (s *ServicesInvokeResponseBody) GetSuccess() *bool {
@@ -43,6 +36,13 @@ func (s *ServicesInvokeResponseBody) GetSuccess() *bool {
 		return nil
 	}
 	return s.Success
+}
+
+func (s *ServicesInvokeResponseBody) GetResult() any {
+	if s == nil {
+		return nil
+	}
+	return s.Result
 }
 
 type ServicesInvokeResponse struct {
