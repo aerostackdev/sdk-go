@@ -14,7 +14,7 @@ import (
 	"time"
 	"unsafe"
 
-	"undefined/pkg/types"
+	"aerostack/pkg/types"
 )
 
 func MarshalJSON(v interface{}, tag reflect.StructTag, topLevel bool) ([]byte, error) {

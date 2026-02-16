@@ -21,17 +21,17 @@ package main
 
 import(
 	"context"
-	"undefined/pkg/models/shared"
-	"undefined"
-	"undefined/pkg/models/operations"
+	"aerostack/pkg/models/shared"
+	"aerostack"
+	"aerostack/pkg/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
 
-    s := undefined.New(
-        undefined.WithSecurity(shared.Security{
+    s := aerostack.New(
+        aerostack.WithSecurity(shared.Security{
             APIKeyAuth: "<YOUR_API_KEY_HERE>",
         }),
     )
@@ -39,7 +39,7 @@ func main() {
     res, err := s.Authentication.AuthSignup(ctx, operations.AuthSignupRequestBody{
         Email: "user@example.com",
         Password: "SecurePass123!",
-        Name: undefined.Pointer("John Doe"),
+        Name: aerostack.Pointer("John Doe"),
     })
     if err != nil {
         log.Fatal(err)
@@ -81,17 +81,17 @@ package main
 
 import(
 	"context"
-	"undefined/pkg/models/shared"
-	"undefined"
-	"undefined/pkg/models/operations"
+	"aerostack/pkg/models/shared"
+	"aerostack"
+	"aerostack/pkg/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
 
-    s := undefined.New(
-        undefined.WithSecurity(shared.Security{
+    s := aerostack.New(
+        aerostack.WithSecurity(shared.Security{
             APIKeyAuth: "<YOUR_API_KEY_HERE>",
         }),
     )

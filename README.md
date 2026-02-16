@@ -1,6 +1,6 @@
-# undefined
+# @aerostack/sdk-go
 
-Developer-friendly & type-safe Go SDK specifically catered to leverage *undefined* API.
+Developer-friendly & type-safe Go SDK specifically catered to leverage *Aerostack* API.
 
 [![License: MIT](https://img.shields.io/badge/LICENSE_//_MIT-3b5bdb?style=for-the-badge&labelColor=eff6ff)](https://opensource.org/licenses/MIT)
 
@@ -17,7 +17,7 @@ caching, queues, storage, and AI services.
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-* [undefined](#undefined)
+* [aerostack](#aerostack)
   * [SDK Installation](#sdk-installation)
   * [SDK Example Usage](#sdk-example-usage)
   * [Authentication](#authentication)
@@ -37,7 +37,7 @@ caching, queues, storage, and AI services.
 
 To add the SDK as a dependency to your project:
 ```bash
-go get undefined
+go get github.com/aerostackdev/sdks/packages/go
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -52,16 +52,16 @@ package main
 import (
 	"context"
 	"log"
-	"undefined"
-	"undefined/pkg/models/operations"
-	"undefined/pkg/models/shared"
+	"aerostack"
+	"aerostack/pkg/models/operations"
+	"aerostack/pkg/models/shared"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := undefined.New(
-		undefined.WithSecurity(shared.Security{
+	s := aerostack.New(
+		aerostack.WithSecurity(shared.Security{
 			APIKeyAuth: "<YOUR_API_KEY_HERE>",
 		}),
 	)
@@ -101,16 +101,16 @@ package main
 import (
 	"context"
 	"log"
-	"undefined"
-	"undefined/pkg/models/operations"
-	"undefined/pkg/models/shared"
+	"aerostack"
+	"aerostack/pkg/models/operations"
+	"aerostack/pkg/models/shared"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := undefined.New(
-		undefined.WithSecurity(shared.Security{
+	s := aerostack.New(
+		aerostack.WithSecurity(shared.Security{
 			APIKeyAuth: "<YOUR_API_KEY_HERE>",
 		}),
 	)
@@ -193,17 +193,17 @@ import (
 	"context"
 	"log"
 	"pkg/models/operations"
-	"undefined"
-	"undefined/pkg/models/operations"
-	"undefined/pkg/models/shared"
-	"undefined/pkg/retry"
+	"aerostack"
+	"aerostack/pkg/models/operations"
+	"aerostack/pkg/models/shared"
+	"aerostack/pkg/retry"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := undefined.New(
-		undefined.WithSecurity(shared.Security{
+	s := aerostack.New(
+		aerostack.WithSecurity(shared.Security{
 			APIKeyAuth: "<YOUR_API_KEY_HERE>",
 		}),
 	)
@@ -241,17 +241,17 @@ package main
 import (
 	"context"
 	"log"
-	"undefined"
-	"undefined/pkg/models/operations"
-	"undefined/pkg/models/shared"
-	"undefined/pkg/retry"
+	"aerostack"
+	"aerostack/pkg/models/operations"
+	"aerostack/pkg/models/shared"
+	"aerostack/pkg/retry"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := undefined.New(
-		undefined.WithRetryConfig(
+	s := aerostack.New(
+		aerostack.WithRetryConfig(
 			retry.Config{
 				Strategy: "backoff",
 				Backoff: &retry.BackoffStrategy{
@@ -262,7 +262,7 @@ func main() {
 				},
 				RetryConnectionErrors: false,
 			}),
-		undefined.WithSecurity(shared.Security{
+		aerostack.WithSecurity(shared.Security{
 			APIKeyAuth: "<YOUR_API_KEY_HERE>",
 		}),
 	)
@@ -308,17 +308,17 @@ import (
 	"context"
 	"errors"
 	"log"
-	"undefined"
-	"undefined/pkg/models/operations"
-	"undefined/pkg/models/sdkerrors"
-	"undefined/pkg/models/shared"
+	"aerostack"
+	"aerostack/pkg/models/operations"
+	"aerostack/pkg/models/sdkerrors"
+	"aerostack/pkg/models/shared"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := undefined.New(
-		undefined.WithSecurity(shared.Security{
+	s := aerostack.New(
+		aerostack.WithSecurity(shared.Security{
 			APIKeyAuth: "<YOUR_API_KEY_HERE>",
 		}),
 	)
@@ -363,7 +363,7 @@ You can override the default server globally using the `WithServerIndex(serverIn
 
 | #   | Server                        | Description       |
 | --- | ----------------------------- | ----------------- |
-| 0   | `https://api.aerostack.ai/v1` | Production        |
+| 0   | `https://api.aerostack.dev/v1` | Production        |
 | 1   | `http://localhost:8787/v1`    | Local Development |
 
 #### Example
@@ -374,17 +374,17 @@ package main
 import (
 	"context"
 	"log"
-	"undefined"
-	"undefined/pkg/models/operations"
-	"undefined/pkg/models/shared"
+	"aerostack"
+	"aerostack/pkg/models/operations"
+	"aerostack/pkg/models/shared"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := undefined.New(
-		undefined.WithServerIndex(0),
-		undefined.WithSecurity(shared.Security{
+	s := aerostack.New(
+		aerostack.WithServerIndex(0),
+		aerostack.WithSecurity(shared.Security{
 			APIKeyAuth: "<YOUR_API_KEY_HERE>",
 		}),
 	)
@@ -414,17 +414,17 @@ package main
 import (
 	"context"
 	"log"
-	"undefined"
-	"undefined/pkg/models/operations"
-	"undefined/pkg/models/shared"
+	"aerostack"
+	"aerostack/pkg/models/operations"
+	"aerostack/pkg/models/shared"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := undefined.New(
-		undefined.WithServerURL("http://localhost:8787/v1"),
-		undefined.WithSecurity(shared.Security{
+	s := aerostack.New(
+		aerostack.WithServerURL("http://localhost:8787/v1"),
+		aerostack.WithSecurity(shared.Security{
 			APIKeyAuth: "<YOUR_API_KEY_HERE>",
 		}),
 	)
@@ -464,12 +464,12 @@ import (
 	"net/http"
 	"time"
 
-	"undefined"
+	"aerostack"
 )
 
 var (
 	httpClient = &http.Client{Timeout: 30 * time.Second}
-	sdkClient  = undefined.New(undefined.WithClient(httpClient))
+	sdkClient  = aerostack.New(aerostack.WithClient(httpClient))
 )
 ```
 

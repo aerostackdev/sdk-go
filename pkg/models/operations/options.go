@@ -5,8 +5,8 @@ package operations
 import (
 	"errors"
 	"time"
-	"undefined/pkg/retry"
-	"undefined/pkg/utils"
+	"aerostack/pkg/retry"
+	"aerostack/pkg/utils"
 )
 
 var ErrUnsupportedOption = errors.New("unsupported option")

@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"net/http"
-	"undefined/internal/config"
+	"aerostack/internal/config"
 )
 
 type FailEarly struct {

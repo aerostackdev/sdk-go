@@ -15,7 +15,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"undefined/pkg/retry"
+	"aerostack/pkg/retry"
 )
 
 // Deprecated: Use retry.BackoffStrategy instead.

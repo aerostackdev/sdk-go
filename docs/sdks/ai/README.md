@@ -20,23 +20,23 @@ package main
 
 import(
 	"context"
-	"undefined/pkg/models/shared"
-	"undefined"
-	"undefined/pkg/models/operations"
+	"aerostack/pkg/models/shared"
+	"aerostack"
+	"aerostack/pkg/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
 
-    s := undefined.New(
-        undefined.WithSecurity(shared.Security{
+    s := aerostack.New(
+        aerostack.WithSecurity(shared.Security{
             APIKeyAuth: "<YOUR_API_KEY_HERE>",
         }),
     )
 
     res, err := s.Ai.AiChat(ctx, operations.AiChatRequestBody{
-        Model: undefined.Pointer("@cf/meta/llama-3-8b-instruct"),
+        Model: aerostack.Pointer("@cf/meta/llama-3-8b-instruct"),
         Messages: []operations.Messages{
             operations.Messages{},
         },

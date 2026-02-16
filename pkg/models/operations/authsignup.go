@@ -4,7 +4,7 @@ package operations
 
 import (
 	"net/http"
-	"undefined/pkg/models/shared"
+	"aerostack/pkg/models/shared"
 )
 
 type AuthSignupRequestBody struct {

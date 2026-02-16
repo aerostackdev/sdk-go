@@ -5,16 +5,16 @@ package main
 import (
 	"context"
 	"log"
-	"undefined"
-	"undefined/pkg/models/operations"
-	"undefined/pkg/models/shared"
+	"aerostack"
+	"aerostack/pkg/models/operations"
+	"aerostack/pkg/models/shared"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := undefined.New(
-		undefined.WithSecurity(shared.Security{
+	s := aerostack.New(
+		aerostack.WithSecurity(shared.Security{
 			APIKeyAuth: "<YOUR_API_KEY_HERE>",
 		}),
 	)

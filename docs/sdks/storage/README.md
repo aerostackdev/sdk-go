@@ -20,18 +20,18 @@ package main
 
 import(
 	"context"
-	"undefined/pkg/models/shared"
-	"undefined"
+	"aerostack/pkg/models/shared"
+	"aerostack"
 	"os"
-	"undefined/pkg/models/operations"
+	"aerostack/pkg/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
 
-    s := undefined.New(
-        undefined.WithSecurity(shared.Security{
+    s := aerostack.New(
+        aerostack.WithSecurity(shared.Security{
             APIKeyAuth: "<YOUR_API_KEY_HERE>",
         }),
     )
@@ -47,7 +47,7 @@ func main() {
             Content: example,
         },
         Key: "avatars/user-123.jpg",
-        ContentType: undefined.Pointer("image/jpeg"),
+        ContentType: aerostack.Pointer("image/jpeg"),
     })
     if err != nil {
         log.Fatal(err)

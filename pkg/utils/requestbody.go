@@ -15,7 +15,7 @@ import (
 	"reflect"
 	"regexp"
 
-	"undefined/pkg/optionalnullable"
+	"aerostack/pkg/optionalnullable"
 )
 
 const (

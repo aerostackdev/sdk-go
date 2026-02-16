@@ -1,5 +1,5 @@
 
-module undefined
+module aerostack
 
 go 1.22
 

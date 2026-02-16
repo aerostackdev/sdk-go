@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"undefined/pkg/types"
+	"aerostack/pkg/types"
 )
 
 // UnionCandidate represents a candidate type during union deserialization

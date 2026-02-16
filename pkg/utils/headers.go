@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"strings"
 
-	"undefined/pkg/optionalnullable"
+	"aerostack/pkg/optionalnullable"
 )
 
 func PopulateHeaders(_ context.Context, req *http.Request, headers interface{}, globals interface{}) {

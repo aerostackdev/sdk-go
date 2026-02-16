@@ -1,4 +1,4 @@
-package undefined
+package aerostack
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"undefined/internal/config"
+	"aerostack/internal/config"
 
 	"github.com/gorilla/websocket"
 )

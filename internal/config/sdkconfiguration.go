@@ -6,7 +6,7 @@ import (
 	"context"
 	"net/http"
 	"time"
-	"undefined/pkg/retry"
+	"aerostack/pkg/retry"
 )
 
 type HTTPClient interface {

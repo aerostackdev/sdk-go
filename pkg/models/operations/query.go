@@ -4,8 +4,8 @@ package operations
 
 import (
 	"net/http"
-	"undefined/pkg/models/shared"
-	"undefined/pkg/utils"
+	"aerostack/pkg/models/shared"
+	"aerostack/pkg/utils"
 )
 
 type QueryRequestBody struct {

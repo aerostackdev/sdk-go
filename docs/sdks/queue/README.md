@@ -20,17 +20,17 @@ package main
 
 import(
 	"context"
-	"undefined/pkg/models/shared"
-	"undefined"
-	"undefined/pkg/models/operations"
+	"aerostack/pkg/models/shared"
+	"aerostack"
+	"aerostack/pkg/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
 
-    s := undefined.New(
-        undefined.WithSecurity(shared.Security{
+    s := aerostack.New(
+        aerostack.WithSecurity(shared.Security{
             APIKeyAuth: "<YOUR_API_KEY_HERE>",
         }),
     )
@@ -40,7 +40,7 @@ func main() {
         Data: map[string]any{
             "key": "<value>",
         },
-        Delay: undefined.Pointer[int64](60),
+        Delay: aerostack.Pointer[int64](60),
     })
     if err != nil {
         log.Fatal(err)

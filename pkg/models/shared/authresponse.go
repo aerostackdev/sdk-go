@@ -4,7 +4,7 @@ package shared
 
 import (
 	"time"
-	"undefined/pkg/utils"
+	"aerostack/pkg/utils"
 )
 
 type AuthResponse struct {
