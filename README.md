@@ -476,6 +476,23 @@ var (
 This can be a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration.
 <!-- End Custom HTTP Client [http-client] -->
 
+
+## Backend Service Integration
+
+> **SDK Type**: HTTP Client (API Calls)
+
+This Go SDK is an **HTTP client** for calling Aerostack APIs from Go backends:
+
+✅ **Use cases**:
+- Go HTTP servers (net/http, Gin, Echo, Fiber) calling Aerostack APIs
+- Go microservices integrating with Aerostack Auth/E-commerce
+- CLI tools and background workers
+
+❌ **Not for**:
+- Direct Cloudflare binding access (use TypeScript `@aerostack/sdk` Server SDK in Workers)
+
+For Go backends, this SDK is all you need. For Worker bindings, use TypeScript Workers.
+
 # Development
 
 ## Maturity
