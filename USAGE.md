@@ -4,10 +4,10 @@ package main
 
 import (
 	"context"
+	aerostack "github.com/aerostackdev/sdks/packages/go"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
 	"log"
-	"aerostack"
-	"aerostack/pkg/models/operations"
-	"aerostack/pkg/models/shared"
 )
 
 func main() {
@@ -24,7 +24,7 @@ func main() {
 		Params: []any{
 			true,
 		},
-	})
+	}, nil, aerostack.Pointer("0.1.0"))
 	if err != nil {
 		log.Fatal(err)
 	}

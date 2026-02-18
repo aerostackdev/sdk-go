@@ -3,8 +3,8 @@
 package operations
 
 import (
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
 	"net/http"
-	"aerostack/pkg/models/shared"
 )
 
 type AuthSigninRequestBody struct {

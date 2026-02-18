@@ -20,9 +20,9 @@ package main
 
 import(
 	"context"
-	"aerostack/pkg/models/shared"
-	"aerostack"
-	"aerostack/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
+	aerostack "github.com/aerostackdev/sdks/packages/go"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
 	"log"
 )
 
@@ -40,7 +40,7 @@ func main() {
         Params: []any{
             true,
         },
-    })
+    }, nil, aerostack.Pointer("0.1.0"))
     if err != nil {
         log.Fatal(err)
     }
@@ -52,11 +52,13 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
-| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `ctx`                                                                              | [context.Context](https://pkg.go.dev/context#Context)                              | :heavy_check_mark:                                                                 | The context to use for the request.                                                |
-| `request`                                                                          | [operations.DbQueryRequestBody](../../pkg/models/operations/dbqueryrequestbody.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
-| `opts`                                                                             | [][operations.Option](../../pkg/models/operations/option.md)                       | :heavy_minus_sign:                                                                 | The options for this request.                                                      |
+| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        | Example                                                                            |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `ctx`                                                                              | [context.Context](https://pkg.go.dev/context#Context)                              | :heavy_check_mark:                                                                 | The context to use for the request.                                                |                                                                                    |
+| `requestBody`                                                                      | [operations.DbQueryRequestBody](../../pkg/models/operations/dbqueryrequestbody.md) | :heavy_check_mark:                                                                 | N/A                                                                                |                                                                                    |
+| `xRequestID`                                                                       | **string*                                                                          | :heavy_minus_sign:                                                                 | Unique request tracing ID                                                          |                                                                                    |
+| `xSDKVersion`                                                                      | **string*                                                                          | :heavy_minus_sign:                                                                 | SDK version string                                                                 | 0.1.0                                                                              |
+| `opts`                                                                             | [][operations.Option](../../pkg/models/operations/option.md)                       | :heavy_minus_sign:                                                                 | The options for this request.                                                      |                                                                                    |
 
 ### Response
 

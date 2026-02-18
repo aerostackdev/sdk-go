@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"aerostack/pkg/optionalnullable"
-	"aerostack/pkg/types"
+	"github.com/aerostackdev/sdks/packages/go/pkg/optionalnullable"
+	"github.com/aerostackdev/sdks/packages/go/pkg/types"
 )
 
 func populateForm(paramName string, explode bool, objType reflect.Type, objValue reflect.Value, delimiter string, defaultValue *string, allowEmptyValue map[string]struct{}, getFieldName func(reflect.StructField) string) url.Values {

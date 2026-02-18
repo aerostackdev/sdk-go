@@ -17,7 +17,7 @@ caching, queues, storage, and AI services.
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-* [aerostack](#aerostack)
+* [@aerostack/sdk-go](#aerostacksdk-go)
   * [SDK Installation](#sdk-installation)
   * [SDK Example Usage](#sdk-example-usage)
   * [Authentication](#authentication)
@@ -26,6 +26,7 @@ caching, queues, storage, and AI services.
   * [Error Handling](#error-handling)
   * [Server Selection](#server-selection)
   * [Custom HTTP Client](#custom-http-client)
+  * [Backend Service Integration](#backend-service-integration)
 * [Development](#development)
   * [Maturity](#maturity)
   * [Contributions](#contributions)
@@ -51,10 +52,10 @@ package main
 
 import (
 	"context"
+	aerostack "github.com/aerostackdev/sdks/packages/go"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
 	"log"
-	"aerostack"
-	"aerostack/pkg/models/operations"
-	"aerostack/pkg/models/shared"
 )
 
 func main() {
@@ -71,7 +72,7 @@ func main() {
 		Params: []any{
 			true,
 		},
-	})
+	}, nil, aerostack.Pointer("0.1.0"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -100,10 +101,10 @@ package main
 
 import (
 	"context"
+	aerostack "github.com/aerostackdev/sdks/packages/go"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
 	"log"
-	"aerostack"
-	"aerostack/pkg/models/operations"
-	"aerostack/pkg/models/shared"
 )
 
 func main() {
@@ -120,7 +121,7 @@ func main() {
 		Params: []any{
 			true,
 		},
-	})
+	}, nil, aerostack.Pointer("0.1.0"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -191,12 +192,12 @@ package main
 
 import (
 	"context"
+	aerostack "github.com/aerostackdev/sdks/packages/go"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
+	"github.com/aerostackdev/sdks/packages/go/pkg/retry"
 	"log"
 	"pkg/models/operations"
-	"aerostack"
-	"aerostack/pkg/models/operations"
-	"aerostack/pkg/models/shared"
-	"aerostack/pkg/retry"
 )
 
 func main() {
@@ -213,7 +214,7 @@ func main() {
 		Params: []any{
 			true,
 		},
-	}, operations.WithRetries(
+	}, nil, aerostack.Pointer("0.1.0"), operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -240,11 +241,11 @@ package main
 
 import (
 	"context"
+	aerostack "github.com/aerostackdev/sdks/packages/go"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
+	"github.com/aerostackdev/sdks/packages/go/pkg/retry"
 	"log"
-	"aerostack"
-	"aerostack/pkg/models/operations"
-	"aerostack/pkg/models/shared"
-	"aerostack/pkg/retry"
 )
 
 func main() {
@@ -272,7 +273,7 @@ func main() {
 		Params: []any{
 			true,
 		},
-	})
+	}, nil, aerostack.Pointer("0.1.0"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -307,11 +308,11 @@ package main
 import (
 	"context"
 	"errors"
+	aerostack "github.com/aerostackdev/sdks/packages/go"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/sdkerrors"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
 	"log"
-	"aerostack"
-	"aerostack/pkg/models/operations"
-	"aerostack/pkg/models/sdkerrors"
-	"aerostack/pkg/models/shared"
 )
 
 func main() {
@@ -328,7 +329,7 @@ func main() {
 		Params: []any{
 			true,
 		},
-	})
+	}, nil, aerostack.Pointer("0.1.0"))
 	if err != nil {
 
 		var e *sdkerrors.ErrorResponse
@@ -363,7 +364,7 @@ You can override the default server globally using the `WithServerIndex(serverIn
 
 | #   | Server                        | Description       |
 | --- | ----------------------------- | ----------------- |
-| 0   | `https://api.aerostack.dev/v1` | Production        |
+| 0   | `https://api.aerostack.ai/v1` | Production        |
 | 1   | `http://localhost:8787/v1`    | Local Development |
 
 #### Example
@@ -373,10 +374,10 @@ package main
 
 import (
 	"context"
+	aerostack "github.com/aerostackdev/sdks/packages/go"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
 	"log"
-	"aerostack"
-	"aerostack/pkg/models/operations"
-	"aerostack/pkg/models/shared"
 )
 
 func main() {
@@ -394,7 +395,7 @@ func main() {
 		Params: []any{
 			true,
 		},
-	})
+	}, nil, aerostack.Pointer("0.1.0"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -413,10 +414,10 @@ package main
 
 import (
 	"context"
+	aerostack "github.com/aerostackdev/sdks/packages/go"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
 	"log"
-	"aerostack"
-	"aerostack/pkg/models/operations"
-	"aerostack/pkg/models/shared"
 )
 
 func main() {
@@ -434,7 +435,7 @@ func main() {
 		Params: []any{
 			true,
 		},
-	})
+	}, nil, aerostack.Pointer("0.1.0"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -464,7 +465,7 @@ import (
 	"net/http"
 	"time"
 
-	"aerostack"
+	"github.com/aerostackdev/sdks/packages/go"
 )
 
 var (

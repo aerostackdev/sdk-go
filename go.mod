@@ -1,5 +1,5 @@
 
-module aerostack
+module github.com/aerostackdev/sdks/packages/go
 
 go 1.22
 

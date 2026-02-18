@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/aerostackdev/sdks/packages/go/pkg/retry"
 	"io"
 	"math"
 	"math/rand"
@@ -15,7 +16,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"aerostack/pkg/retry"
 )
 
 // Deprecated: Use retry.BackoffStrategy instead.

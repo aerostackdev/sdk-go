@@ -14,7 +14,7 @@ import (
 	"time"
 	"unsafe"
 
-	"aerostack/pkg/types"
+	"github.com/aerostackdev/sdks/packages/go/pkg/types"
 )
 
 func MarshalJSON(v interface{}, tag reflect.StructTag, topLevel bool) ([]byte, error) {

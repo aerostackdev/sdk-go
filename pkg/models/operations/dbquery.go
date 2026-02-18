@@ -3,8 +3,8 @@
 package operations
 
 import (
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
 	"net/http"
-	"aerostack/pkg/models/shared"
 )
 
 type DbQueryRequestBody struct {
@@ -26,6 +26,35 @@ func (d *DbQueryRequestBody) GetParams() []any {
 		return nil
 	}
 	return d.Params
+}
+
+type DbQueryRequest struct {
+	// Unique request tracing ID
+	XRequestID *string `header:"style=simple,explode=false,name=X-Request-ID"`
+	// SDK version string
+	XSDKVersion *string            `header:"style=simple,explode=false,name=X-SDK-Version"`
+	RequestBody DbQueryRequestBody `request:"mediaType=application/json"`
+}
+
+func (d *DbQueryRequest) GetXRequestID() *string {
+	if d == nil {
+		return nil
+	}
+	return d.XRequestID
+}
+
+func (d *DbQueryRequest) GetXSDKVersion() *string {
+	if d == nil {
+		return nil
+	}
+	return d.XSDKVersion
+}
+
+func (d *DbQueryRequest) GetRequestBody() DbQueryRequestBody {
+	if d == nil {
+		return DbQueryRequestBody{}
+	}
+	return d.RequestBody
 }
 
 type DbQueryResponse struct {

@@ -20,10 +20,10 @@ package main
 
 import(
 	"context"
-	"aerostack/pkg/models/shared"
-	"aerostack"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
+	aerostack "github.com/aerostackdev/sdks/packages/go"
 	"os"
-	"aerostack/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
 	"log"
 )
 

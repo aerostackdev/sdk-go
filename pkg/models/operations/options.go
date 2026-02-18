@@ -4,9 +4,9 @@ package operations
 
 import (
 	"errors"
+	"github.com/aerostackdev/sdks/packages/go/pkg/retry"
+	"github.com/aerostackdev/sdks/packages/go/pkg/utils"
 	"time"
-	"aerostack/pkg/retry"
-	"aerostack/pkg/utils"
 )
 
 var ErrUnsupportedOption = errors.New("unsupported option")

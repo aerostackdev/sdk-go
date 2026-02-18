@@ -6,15 +6,15 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/aerostackdev/sdks/packages/go/internal/config"
+	"github.com/aerostackdev/sdks/packages/go/internal/hooks"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/sdkerrors"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
+	"github.com/aerostackdev/sdks/packages/go/pkg/retry"
+	"github.com/aerostackdev/sdks/packages/go/pkg/utils"
 	"net/http"
 	"net/url"
-	"aerostack/internal/config"
-	"aerostack/internal/hooks"
-	"aerostack/pkg/models/operations"
-	"aerostack/pkg/models/sdkerrors"
-	"aerostack/pkg/models/shared"
-	"aerostack/pkg/retry"
-	"aerostack/pkg/utils"
 )
 
 // Database - SQL database operations
@@ -34,7 +34,13 @@ func newDatabase(rootSDK *SDK, sdkConfig config.SDKConfiguration, hooks *hooks.H
 
 // DbQuery - Execute SQL query
 // Run a SQL query against your project database
-func (s *Database) DbQuery(ctx context.Context, request operations.DbQueryRequestBody, opts ...operations.Option) (*operations.DbQueryResponse, error) {
+func (s *Database) DbQuery(ctx context.Context, requestBody operations.DbQueryRequestBody, xRequestID *string, xSDKVersion *string, opts ...operations.Option) (*operations.DbQueryResponse, error) {
+	request := operations.DbQueryRequest{
+		XRequestID:  xRequestID,
+		XSDKVersion: xSDKVersion,
+		RequestBody: requestBody,
+	}
+
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -67,7 +73,7 @@ func (s *Database) DbQuery(ctx context.Context, request operations.DbQueryReques
 		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "RequestBody", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
 	}
@@ -92,6 +98,8 @@ func (s *Database) DbQuery(ctx context.Context, request operations.DbQueryReques
 	if reqContentType != "" {
 		req.Header.Set("Content-Type", reqContentType)
 	}
+
+	utils.PopulateHeaders(ctx, req, request, nil)
 
 	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
 		return nil, err

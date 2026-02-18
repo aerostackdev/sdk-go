@@ -15,7 +15,7 @@ import (
 	"reflect"
 	"regexp"
 
-	"aerostack/pkg/optionalnullable"
+	"github.com/aerostackdev/sdks/packages/go/pkg/optionalnullable"
 )
 
 const (

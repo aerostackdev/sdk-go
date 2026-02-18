@@ -12,8 +12,8 @@ import (
 	"reflect"
 	"time"
 
-	"aerostack/pkg/optionalnullable"
-	"aerostack/pkg/types"
+	"github.com/aerostackdev/sdks/packages/go/pkg/optionalnullable"
+	"github.com/aerostackdev/sdks/packages/go/pkg/types"
 )
 
 func PopulateQueryParams(_ context.Context, req *http.Request, queryParams interface{}, globals interface{}, allowEmptyValue map[string]struct{}) error {

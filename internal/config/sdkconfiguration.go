@@ -4,9 +4,9 @@ package config
 
 import (
 	"context"
+	"github.com/aerostackdev/sdks/packages/go/pkg/retry"
 	"net/http"
 	"time"
-	"aerostack/pkg/retry"
 )
 
 type HTTPClient interface {

@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"aerostack/pkg/optionalnullable"
-	"aerostack/pkg/types"
+	"github.com/aerostackdev/sdks/packages/go/pkg/optionalnullable"
+	"github.com/aerostackdev/sdks/packages/go/pkg/types"
 )
 
 func GenerateURL(_ context.Context, serverURL, path string, pathParams interface{}, globals interface{}) (string, error) {

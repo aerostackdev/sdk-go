@@ -5,8 +5,8 @@ package hooks
 import (
 	"context"
 	"errors"
+	"github.com/aerostackdev/sdks/packages/go/internal/config"
 	"net/http"
-	"aerostack/internal/config"
 )
 
 type FailEarly struct {

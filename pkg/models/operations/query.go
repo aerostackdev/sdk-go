@@ -3,9 +3,9 @@
 package operations
 
 import (
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
+	"github.com/aerostackdev/sdks/packages/go/pkg/utils"
 	"net/http"
-	"aerostack/pkg/models/shared"
-	"aerostack/pkg/utils"
 )
 
 type QueryRequestBody struct {

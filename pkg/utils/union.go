@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"aerostack/pkg/types"
+	"github.com/aerostackdev/sdks/packages/go/pkg/types"
 )
 
 // UnionCandidate represents a candidate type during union deserialization

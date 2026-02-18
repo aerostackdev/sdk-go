@@ -3,8 +3,8 @@
 package shared
 
 import (
+	"github.com/aerostackdev/sdks/packages/go/pkg/utils"
 	"time"
-	"aerostack/pkg/utils"
 )
 
 type User struct {

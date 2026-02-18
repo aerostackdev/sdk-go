@@ -6,15 +6,15 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/aerostackdev/sdks/packages/go/internal/config"
+	"github.com/aerostackdev/sdks/packages/go/internal/hooks"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/sdkerrors"
+	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
+	"github.com/aerostackdev/sdks/packages/go/pkg/retry"
+	"github.com/aerostackdev/sdks/packages/go/pkg/utils"
 	"net/http"
 	"net/url"
-	"aerostack/internal/config"
-	"aerostack/internal/hooks"
-	"aerostack/pkg/models/operations"
-	"aerostack/pkg/models/sdkerrors"
-	"aerostack/pkg/models/shared"
-	"aerostack/pkg/retry"
-	"aerostack/pkg/utils"
 )
 
 // Authentication - User authentication and management
