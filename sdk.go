@@ -7,14 +7,13 @@ package aerostack
 import (
 	"context"
 	"fmt"
-	"net/http"
-	"time"
-
 	"github.com/aerostackdev/sdks/packages/go/internal/config"
 	"github.com/aerostackdev/sdks/packages/go/internal/hooks"
 	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
 	"github.com/aerostackdev/sdks/packages/go/pkg/retry"
 	"github.com/aerostackdev/sdks/packages/go/pkg/utils"
+	"net/http"
+	"time"
 )
 
 // ServerList contains the list of servers available to the SDK
@@ -69,6 +68,7 @@ type SDK struct {
 	Ai *Ai
 	// Cross-service invocation
 	Services *Services
+	Gateway  *Gateway
 
 	sdkConfiguration config.SDKConfiguration
 	hooks            *hooks.Hooks
@@ -169,6 +169,7 @@ func New(opts ...SDKOption) *SDK {
 	sdk.Storage = newStorage(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Ai = newAi(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Services = newServices(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Gateway = newGateway(sdk, sdk.sdkConfiguration, sdk.hooks)
 
 	return sdk
 }

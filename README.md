@@ -166,6 +166,10 @@ func main() {
 
 * [DbQuery](docs/sdks/database/README.md#dbquery) - Execute SQL query
 
+### [Gateway.Billing](docs/sdks/billing/README.md)
+
+* [GatewayBillingLog](docs/sdks/billing/README.md#gatewaybillinglog) - Log Gateway usage
+
 ### [Queue](docs/sdks/queue/README.md)
 
 * [QueueEnqueue](docs/sdks/queue/README.md#queueenqueue) - Add job to queue
