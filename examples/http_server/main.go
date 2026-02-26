@@ -9,7 +9,6 @@ import (
 
 	aerostack "github.com/aerostackdev/sdks/packages/go"
 	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
-	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
 )
 
 /*
@@ -18,7 +17,7 @@ import (
  * Demonstrates usage with standard library net/http
  */
 
-var sdk *aerostack.Aerostack
+var sdk *aerostack.SDK
 
 func main() {
 	// Initialize SDK
@@ -69,7 +68,7 @@ func handleSignup(w http.ResponseWriter, r *http.Request) {
 	if res.StatusCode == 201 {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
-		json.NewEncoder(w).Encode(res.AuthSignupResponse)
+		json.NewEncoder(w).Encode(res.AuthResponse)
 	} else {
 		http.Error(w, "Signup failed", http.StatusBadRequest)
 	}
@@ -79,10 +78,9 @@ func handleUsers(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 
 	// Example DB Query
-	query := "SELECT * FROM users LIMIT 10"
-	res, err := sdk.Database.DbQuery(ctx, shared.DbQueryRequest{
-		Query: query,
-	})
+	res, err := sdk.Database.DbQuery(ctx, operations.DbQueryRequestBody{
+		SQL: "SELECT * FROM users LIMIT 10",
+	}, nil, nil)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -90,5 +88,9 @@ func handleUsers(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(res.DbQueryResponse)
+	if res != nil && res.DbQueryResult != nil {
+		json.NewEncoder(w).Encode(res.DbQueryResult)
+	} else {
+		json.NewEncoder(w).Encode(map[string]any{"results": []any{}})
+	}
 }

@@ -4,9 +4,8 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/aerostackdev/sdks/packages/go"
 	"github.com/aerostackdev/sdks/packages/go/pkg/models/operations"
-	// "github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
-	aerostack "github.com/aerostackdev/sdks/packages/go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -32,7 +31,7 @@ func main() {
 	})
 
 	r.POST("/signup", func(c *gin.Context) {
-		client := c.MustGet("sdk").(*aerostack.Aerostack)
+		client := c.MustGet("sdk").(*aerostack.SDK)
 
 		var req struct {
 			Email    string `json:"email"`
@@ -57,7 +56,7 @@ func main() {
 		}
 
 		if res.StatusCode == 201 {
-			c.JSON(http.StatusCreated, res.AuthSignupResponse)
+			c.JSON(http.StatusCreated, res.AuthResponse)
 		} else {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Signup failed"})
 		}
