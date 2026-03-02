@@ -1,0 +1,802 @@
+openapi: 3.1.0
+info:
+  contact:
+    name: Aerostack Support
+    url: https://aerostack.ai/support
+  description: "Aerostack Platform API - Unified access to database, authentication,\
+    \ \ncaching, queues, storage, and AI services.\n"
+  title: Aerostack API
+  version: 1.0.0
+servers:
+- description: Production
+  url: https://api.aerocall.ai/v1
+- description: Local Development
+  url: http://localhost:8787/v1
+security:
+- ApiKeyAuth: []
+tags:
+- description: SQL database operations
+  name: Database
+- description: User authentication and management
+  name: Authentication
+- description: Key-value caching
+  name: Cache
+- description: Background job queue
+  name: Queue
+- description: File storage
+  name: Storage
+- description: AI/ML operations
+  name: AI
+- description: Cross-service invocation
+  name: Services
+paths:
+  /db/query:
+    post:
+      description: Run a SQL query against your project database
+      operationId: dbQuery
+      parameters:
+      - $ref: '#/components/parameters/XRequestID'
+      - $ref: '#/components/parameters/XSDKVersion'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dbQuery_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DbQueryResult'
+          description: Query executed successfully
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "500":
+          $ref: '#/components/responses/InternalError'
+      summary: Execute SQL query
+      tags:
+      - Database
+  /auth/signup:
+    post:
+      operationId: authSignup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/authSignup_request'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+          description: User created successfully
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: User already exists
+      summary: Sign up new user
+      tags:
+      - Authentication
+  /auth/signin:
+    post:
+      operationId: authSignin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/authSignin_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+          description: User authenticated successfully
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid credentials
+      summary: Sign in user
+      tags:
+      - Authentication
+  /cache/get:
+    post:
+      operationId: cacheGet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cacheGet_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cacheGet_200_response'
+          description: Cache value retrieved
+      summary: Get cached value
+      tags:
+      - Cache
+  /cache/set:
+    post:
+      operationId: cacheSet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cacheSet_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cacheSet_200_response'
+          description: Value cached successfully
+      summary: Set cached value
+      tags:
+      - Cache
+  /queue/enqueue:
+    post:
+      operationId: queueEnqueue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/queueEnqueue_request'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/queueEnqueue_201_response'
+          description: Job enqueued successfully
+      summary: Add job to queue
+      tags:
+      - Queue
+  /storage/upload:
+    post:
+      operationId: storageUpload
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/storageUpload_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storageUpload_200_response'
+          description: File uploaded successfully
+      summary: Upload file to storage
+      tags:
+      - Storage
+  /ai/chat:
+    post:
+      operationId: aiChat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/aiChat_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aiChat_200_response'
+          description: AI response generated
+      summary: Generate AI chat completion
+      tags:
+      - AI
+  /ai/search/ingest:
+    post:
+      operationId: ingest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ingest_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cacheSet_200_response'
+          description: Content ingested successfully
+      summary: Ingest content into managed search index
+      tags:
+      - AI
+      x-speakeasy-group: ai.search
+  /ai/search/query:
+    post:
+      operationId: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/query_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/query_200_response'
+          description: Search results
+      summary: Search managed index
+      tags:
+      - AI
+      x-speakeasy-group: ai.search
+  /ai/search/delete:
+    post:
+      operationId: delete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/delete_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cacheSet_200_response'
+          description: Deleted
+      summary: Delete item by ID
+      tags:
+      - AI
+      x-speakeasy-group: ai.search
+  /ai/search/deleteByType:
+    post:
+      operationId: deleteByType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deleteByType_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cacheSet_200_response'
+          description: Deleted
+      summary: Delete all items of a type
+      tags:
+      - AI
+      x-speakeasy-group: ai.search
+  /ai/search/listTypes:
+    get:
+      operationId: listTypes
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listTypes_200_response'
+          description: Type statistics
+      summary: List distinct types and counts
+      tags:
+      - AI
+      x-speakeasy-group: ai.search
+  /ai/search/configure:
+    post:
+      operationId: configure
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/configure_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cacheSet_200_response'
+          description: Configured
+      summary: Update search configuration
+      tags:
+      - AI
+      x-speakeasy-group: ai.search
+  /services/invoke:
+    post:
+      operationId: servicesInvoke
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/servicesInvoke_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/servicesInvoke_200_response'
+          description: Service invoked successfully
+      summary: Invoke another service
+      tags:
+      - Services
+  /gateway/billing/log:
+    post:
+      description: Manually log tokens or custom metric usage for a Gateway API
+      operationId: gatewayBillingLog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gatewayBillingLog_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gatewayBillingLog_200_response'
+          description: Usage logged successfully
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+      summary: Log Gateway usage
+      tags:
+      - Gateway
+      x-speakeasy-group: gateway.billing
+components:
+  parameters:
+    XRequestID:
+      description: Unique request tracing ID
+      explode: false
+      in: header
+      name: X-Request-ID
+      required: false
+      schema:
+        format: uuid
+        type: string
+      style: simple
+    XSDKVersion:
+      description: SDK version string
+      explode: false
+      in: header
+      name: X-SDK-Version
+      required: false
+      schema:
+        example: 0.1.0
+        type: string
+      style: simple
+  responses:
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Invalid request
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Invalid or missing API key
+    InternalError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: Internal server error
+  schemas:
+    DbQueryResult:
+      example:
+        count: 0
+        results:
+        - key: ""
+        - key: ""
+      properties:
+        results:
+          items:
+            additionalProperties: {}
+          type: array
+        count:
+          type: integer
+    AuthResponse:
+      example:
+        user:
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          metadata:
+            key: ""
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          email: email
+        expiresAt: 2000-01-23T04:56:07.000+00:00
+        token: token
+      properties:
+        token:
+          description: JWT authentication token
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        expiresAt:
+          format: date-time
+          type: string
+    User:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        metadata:
+          key: ""
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        email: email
+      properties:
+        id:
+          format: uuid
+          type: string
+        email:
+          format: email
+          type: string
+        name:
+          type: string
+          nullable: true
+        createdAt:
+          format: date-time
+          type: string
+        metadata:
+          additionalProperties: {}
+    SearchResult:
+      example:
+        score: 0.8008281904610115
+        metadata:
+          key: ""
+        id: id
+        type: type
+        content: content
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+        score:
+          type: number
+        type:
+          type: string
+        metadata:
+          additionalProperties: {}
+    TypeStats:
+      example:
+        count: 0
+        type: type
+      properties:
+        type:
+          type: string
+        count:
+          type: integer
+    ErrorResponse:
+      properties:
+        code:
+          enum:
+          - AUTH_INVALID_KEY
+          - AUTH_INVALID_CREDENTIALS
+          - DB_QUERY_FAILED
+          - RATE_LIMIT_EXCEEDED
+          - VALIDATION_ERROR
+          - INTERNAL_ERROR
+          type: string
+        message:
+          type: string
+        details:
+          additionalProperties: {}
+      required:
+      - code
+      - message
+    dbQuery_request:
+      properties:
+        sql:
+          description: SQL query to execute
+          example: SELECT * FROM users WHERE active = ?
+          type: string
+        params:
+          description: Query parameters for prepared statements
+          example:
+          - true
+          items: {}
+          type: array
+      required:
+      - sql
+    authSignup_request:
+      properties:
+        email:
+          example: user@example.com
+          format: email
+          type: string
+        password:
+          example: SecurePass123!
+          format: password
+          minLength: 8
+          type: string
+        name:
+          example: John Doe
+          type: string
+        metadata:
+          additionalProperties: {}
+      required:
+      - email
+      - password
+    authSignin_request:
+      properties:
+        email:
+          format: email
+          type: string
+        password:
+          format: password
+          type: string
+      required:
+      - email
+      - password
+    cacheGet_request:
+      properties:
+        key:
+          example: user:123:profile
+          type: string
+      required:
+      - key
+    cacheGet_200_response:
+      example:
+        exists: true
+        value: ""
+      properties:
+        value: {}
+        exists:
+          type: boolean
+    cacheSet_request:
+      properties:
+        key:
+          type: string
+        value: {}
+        ttl:
+          description: Time to live in seconds
+          example: 3600
+          type: integer
+      required:
+      - key
+      - value
+    cacheSet_200_response:
+      example:
+        success: true
+      properties:
+        success:
+          type: boolean
+    queueEnqueue_request:
+      properties:
+        type:
+          example: send-email
+          type: string
+        data:
+          additionalProperties: {}
+        delay:
+          description: Delay in seconds before processing
+          example: 60
+          type: integer
+      required:
+      - data
+      - type
+    queueEnqueue_201_response:
+      example:
+        jobId: jobId
+        success: true
+      properties:
+        jobId:
+          type: string
+        success:
+          type: boolean
+    storageUpload_request:
+      properties:
+        file:
+          format: binary
+          type: string
+        key:
+          description: Storage key/path
+          example: avatars/user-123.jpg
+          type: string
+        contentType:
+          example: image/jpeg
+          type: string
+      required:
+      - file
+      - key
+    storageUpload_200_response:
+      example:
+        url: https://cdn.aerostack.ai/projects/abc/avatars/user-123.jpg
+      properties:
+        url:
+          example: https://cdn.aerostack.ai/projects/abc/avatars/user-123.jpg
+          format: uri
+          type: string
+    aiChat_request_messages_inner:
+      properties:
+        role:
+          enum:
+          - system
+          - user
+          - assistant
+          type: string
+        content:
+          type: string
+    aiChat_request:
+      properties:
+        model:
+          example: '@cf/meta/llama-3-8b-instruct'
+          type: string
+        messages:
+          items:
+            $ref: '#/components/schemas/aiChat_request_messages_inner'
+          type: array
+      required:
+      - messages
+    aiChat_200_response:
+      example:
+        response: response
+      properties:
+        response:
+          type: string
+    ingest_request:
+      properties:
+        content:
+          description: Text content to index
+          type: string
+        id:
+          description: Optional custom ID
+          type: string
+        type:
+          description: Category/type of content
+          type: string
+        metadata:
+          additionalProperties: {}
+      required:
+      - content
+      - type
+    query_request:
+      properties:
+        text:
+          type: string
+        topK:
+          default: 5
+          type: integer
+        types:
+          items:
+            type: string
+          type: array
+        filter:
+          additionalProperties: {}
+      required:
+      - text
+    query_200_response:
+      example:
+        results:
+        - score: 0.8008281904610115
+          metadata:
+            key: ""
+          id: id
+          type: type
+          content: content
+        - score: 0.8008281904610115
+          metadata:
+            key: ""
+          id: id
+          type: type
+          content: content
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/SearchResult'
+          type: array
+    delete_request:
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    deleteByType_request:
+      properties:
+        type:
+          type: string
+      required:
+      - type
+    listTypes_200_response:
+      example:
+        types:
+        - count: 0
+          type: type
+        - count: 0
+          type: type
+      properties:
+        types:
+          items:
+            $ref: '#/components/schemas/TypeStats'
+          type: array
+    configure_request:
+      properties:
+        embeddingModel:
+          enum:
+          - english
+          - multilingual
+          type: string
+      required:
+      - embeddingModel
+    servicesInvoke_request:
+      properties:
+        serviceName:
+          example: billing-webhook
+          type: string
+        data:
+          additionalProperties: {}
+      required:
+      - data
+      - serviceName
+    servicesInvoke_200_response:
+      example:
+        result: ""
+        success: true
+      properties:
+        success:
+          type: boolean
+        result: {}
+    gatewayBillingLog_request:
+      properties:
+        consumerId:
+          description: The Consumer ID making the request
+          example: usr_123xyz
+          type: string
+        apiId:
+          description: The Developer Gateway API ID being consumed
+          example: api_chat_bot
+          type: string
+        metric:
+          description: "Optional metric name (default: 'units')"
+          example: tokens
+          type: string
+        units:
+          description: Amount of usage to log
+          example: 1500
+          type: integer
+      required:
+      - apiId
+      - consumerId
+      - units
+    gatewayBillingLog_200_response:
+      example:
+        success: true
+        loggedUnits: 0
+      properties:
+        success:
+          type: boolean
+        loggedUnits:
+          type: integer
+  securitySchemes:
+    ApiKeyAuth:
+      description: |
+        Secret API key for server-side access.
+        Format: `ac_secret_xxxxxx`
+        Get your API key from: https://admin.aerostack.ai/settings/api-keys
+      in: header
+      name: X-Aerostack-Key
+      type: apiKey

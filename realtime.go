@@ -9,8 +9,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/aerostackdev/sdks/packages/go/internal/config"
-	"github.com/aerostackdev/sdks/packages/go/pkg/models/shared"
 	"github.com/gorilla/websocket"
 )
 
@@ -61,7 +59,7 @@ const (
 )
 
 type Realtime struct {
-	config            config.SDKConfiguration
+	cfg               *Configuration
 	conn              *websocket.Conn
 	subscriptions     map[string]*RealtimeSubscription
 	mu                sync.RWMutex
@@ -79,9 +77,9 @@ type Realtime struct {
 	maxRetriesListeners  []func()
 }
 
-func newRealtime(c config.SDKConfiguration) *Realtime {
+func newRealtime(cfg *Configuration) *Realtime {
 	return &Realtime{
-		config:               c,
+		cfg:                  cfg,
 		subscriptions:        make(map[string]*RealtimeSubscription),
 		stopChan:             make(chan struct{}),
 		status:               StatusIdle,
@@ -135,9 +133,9 @@ func (r *Realtime) Connect(ctx context.Context) error {
 	r.setStatus(StatusConnecting)
 	r.mu.Unlock()
 
-	rawURL := r.config.ServerURL
-	if rawURL == "" {
-		rawURL = ServerList[0]
+	rawURL, err := r.cfg.ServerURLWithContext(ctx, "")
+	if err != nil {
+		return err
 	}
 
 	u, err := url.Parse(rawURL)
@@ -147,21 +145,20 @@ func (r *Realtime) Connect(ctx context.Context) error {
 	u.Path = ""
 	if u.Scheme == "https" {
 		u.Scheme = "wss"
-	} else {
+	} else if u.Scheme == "http" {
 		u.Scheme = "ws"
 	}
 	u.Path = "/api/realtime"
 
 	// Attach auth params
-	if r.config.Security != nil {
-		secIface, err := r.config.Security(ctx)
-		if err == nil && secIface != nil {
-			if sec, ok := secIface.(shared.Security); ok {
-				q := u.Query()
-				if sec.APIKeyAuth != "" {
-					q.Set("apiKey", sec.APIKeyAuth)
+	if ctx != nil {
+		if apiKeys := ctx.Value(ContextAPIKeys); apiKeys != nil {
+			if keys, ok := apiKeys.(map[string]APIKey); ok {
+				if key, ok := keys["ApiKeyAuth"]; ok {
+					q := u.Query()
+					q.Set("apiKey", key.Key)
+					u.RawQuery = q.Encode()
 				}
-				u.RawQuery = q.Encode()
 			}
 		}
 	}
