@@ -368,7 +368,7 @@ You can override the default server globally using the `WithServerIndex(serverIn
 
 | #   | Server                        | Description       |
 | --- | ----------------------------- | ----------------- |
-| 0   | `https://api.aerostack.ai/v1` | Production        |
+| 0   | `https://api.aerocall.ai/v1` | Production        |
 | 1   | `http://localhost:8787/v1`    | Local Development |
 
 #### Example

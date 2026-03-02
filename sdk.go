@@ -19,7 +19,7 @@ import (
 // ServerList contains the list of servers available to the SDK
 var ServerList = []string{
 	// Production
-	"https://api.aerostack.ai/v1",
+	"https://api.aerocall.ai/v1",
 	// Local Development
 	"http://localhost:8787/v1",
 }
