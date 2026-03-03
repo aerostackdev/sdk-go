@@ -6,6 +6,7 @@ import (
 	"math"
 	"math/rand"
 	"net/url"
+	"strings"
 	"sync"
 	"time"
 
@@ -300,6 +301,22 @@ func (r *Realtime) listen(ctx context.Context) {
 			if msg.Type == "pong" {
 				r.mu.Lock()
 				r.lastPong = time.Now()
+				r.mu.Unlock()
+				continue
+			}
+
+			// Server confirmed subscription with its normalized topic (e.g. 'table/orders/<projectId>').
+			// Re-key our subscription map so incoming db_change messages can be routed correctly.
+			if msg.Type == "subscribed" && msg.Topic != "" {
+				r.mu.Lock()
+				for origTopic, sub := range r.subscriptions {
+					if msg.Topic != origTopic && strings.HasPrefix(msg.Topic, origTopic) {
+						delete(r.subscriptions, origTopic)
+						sub.Topic = msg.Topic
+						r.subscriptions[msg.Topic] = sub
+						break
+					}
+				}
 				r.mu.Unlock()
 				continue
 			}
