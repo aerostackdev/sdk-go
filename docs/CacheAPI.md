@@ -1,6 +1,6 @@
 # \CacheAPI
 
-All URIs are relative to *https://api.aerocall.ai/v1*
+All URIs are relative to *https://api.aerostack.dev/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

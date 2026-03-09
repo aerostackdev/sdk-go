@@ -9,7 +9,7 @@ info:
   version: 1.0.0
 servers:
 - description: Production
-  url: https://api.aerocall.ai/v1
+  url: https://api.aerostack.dev/v1
 - description: Local Development
   url: http://localhost:8787/v1
 security:

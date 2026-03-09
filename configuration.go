@@ -96,7 +96,7 @@ func NewConfiguration() *Configuration {
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{
-				URL: "https://api.aerocall.ai/v1",
+				URL: "https://api.aerostack.dev/v1",
 				Description: "Production",
 			},
 			{
