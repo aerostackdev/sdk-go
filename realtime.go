@@ -79,6 +79,8 @@ func (s *RealtimeSubscription) Unsubscribe(r *Realtime) {
 	defer s.mu.Unlock()
 	s.Callbacks = nil
 	s.legacyCallbacks = nil
+	// Remove from parent map to prevent memory leaks and stale message delivery
+	r.removeSubscription(s.Topic)
 }
 
 func (s *RealtimeSubscription) emit(payload RealtimePayload) {
@@ -266,21 +268,22 @@ func (r *Realtime) Connect(ctx context.Context) error {
 	}
 	u.Path = "/api/realtime"
 
-	// Attach auth params
+	// SECURITY: Pass API key via Sec-WebSocket-Protocol header — never as URL query param
+	// (URL params appear in CDN logs, browser history, and Referer headers).
+	var dialHeaders http.Header
 	if ctx != nil {
 		if apiKeys := ctx.Value(ContextAPIKeys); apiKeys != nil {
 			if keys, ok := apiKeys.(map[string]APIKey); ok {
 				if key, ok := keys["ApiKeyAuth"]; ok {
-					q := u.Query()
-					q.Set("apiKey", key.Key)
-					u.RawQuery = q.Encode()
+					dialHeaders = http.Header{}
+					dialHeaders.Set("Sec-WebSocket-Protocol", fmt.Sprintf("aerostack-key.%s, aerostack-v1", key.Key))
 				}
 			}
 		}
 	}
 
 	dialer := websocket.DefaultDialer
-	conn, _, err := dialer.DialContext(ctx, u.String(), nil)
+	conn, _, err := dialer.DialContext(ctx, u.String(), dialHeaders)
 	if err != nil {
 		r.mu.Lock()
 		r.setStatus(StatusDisconnected)
@@ -344,6 +347,13 @@ func (r *Realtime) Channel(topic string, filter map[string]any) *RealtimeSubscri
 // SendChat sends a chat message to a room. API expects roomId and text at top level.
 func (r *Realtime) SendChat(roomID, text string) {
 	r.sendMap(map[string]any{"type": "chat", "roomId": roomID, "text": text})
+}
+
+// removeSubscription deletes a subscription from the internal map (called on Unsubscribe).
+func (r *Realtime) removeSubscription(topic string) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	delete(r.subscriptions, topic)
 }
 
 func (r *Realtime) send(msg RealtimeMessage) {
